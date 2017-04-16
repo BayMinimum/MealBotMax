@@ -45,7 +45,7 @@ function serverCallback(req, res) {
         try {
             onMessage(data.message, (reply_data, callback)=>{
                 try {
-                    sendMessage(data.chat.id, reply_data.text);
+                    sendMessage(data.message.chat.id, reply_data.text);
                 }catch (err){
                     callback(err);
                 }
