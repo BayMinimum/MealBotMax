@@ -1,0 +1,14 @@
+{
+  "name": "mealbotmax",
+  "version": "0.7.0",
+  "description": "KSA Meal Bot subscription server for Telegram",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BayMinimum <bearksb1115@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^6.1.5"
+  }
+}
