@@ -1,6 +1,7 @@
 'use strict';
 
 let https = require('https');
+let http = require('http');
 let db_query = require('./db');
 
 function setWebhook() {
@@ -137,4 +138,4 @@ function sendMessage(chat_id, text){
 
 setWebhook();
 
-https.createServer(serverCallback).listen(process.env.PORT || 8080);
+http.createServer(serverCallback).listen(process.env.PORT || 8080);
