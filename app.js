@@ -134,4 +134,4 @@ function sendMessage(chat_id, text){
 
 setWebhook();
 
-https.createServer(serverCallback(req, res)).listen(process.env.PORT || 8080);
+https.createServer(serverCallback).listen(process.env.PORT || 8080);
