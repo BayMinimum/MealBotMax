@@ -15,7 +15,7 @@ function setWebhook() {
     };
 
     let post_data = {
-        url: `https://${process.env.SELF_HOSTNAME}/`,
+        url: `https://${process.env.SELF_HOSTNAME}/${process.env.TELEGRAM_TOKEN}`,
         allowed_updates: [ "message" ]
     };
 
