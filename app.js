@@ -71,7 +71,9 @@ function onMessage(msg, reply){
     let text = msg.text;
     let chat_id = msg.chat.id;
     try {
+        console.log("Command: "+text);
         if (text.indexOf("등록") >= 0) {
+            console.log("Opt-in request");
             db_query(1, chat_id, function cb(err, exists) {
                 if (err) reply({text: "오류가 발생했습니다. 다시 시도해 주시겠어요?"}, (err) => {
                     if (err) console.log(err);
@@ -89,6 +91,7 @@ function onMessage(msg, reply){
                 }
             });
         } else if (text.indexOf("해지") >= 0) {
+            console.log("Opt-out request");
             db_query(-1, chat_id, function cb(err, exists) {
                 if (err) reply({text: "오류가 발생했습니다. 다시 시도해 주시겠어요?"}, (err) => {
                     if (err) console.log(err);
