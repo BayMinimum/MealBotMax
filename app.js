@@ -104,6 +104,11 @@ function onMessage(msg, reply){
                     });
             });
 
+        } else if (text === "/start"){
+            reply({text: "반갑습니다! 봇의 알림을 받으시려면 등록 이라고 메시지를 보내주세요." +
+            " 마음이 바뀌신다면 언제든 해지 라고 메시지를 보내 알림 서비스를 해지하실 수 있습니다."}, (err) => {
+                if(err) console.log(err);
+            });
         }
     }catch (exception){
         reply({text: "꾸?"}, (err) => {
