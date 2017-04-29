@@ -9,6 +9,8 @@
   "author": "BayMinimum <bearksb1115@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "pg": "^6.1.5"
+    "cheerio": "^0.22.0",
+    "pg": "^6.1.5",
+    "time": "^0.12.0"
   }
 }
