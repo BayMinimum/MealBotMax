@@ -131,7 +131,7 @@ function onMessage(msg, reply){
                         if(err) console.log(err);
                     });}
                 else if(requestedDay===1 && requestedMeal===4){
-                    reply({text: "저는 오늘 간식만 알고 있어요...ㅠ"}, (err)=>{
+                    reply({text: "저는 오늘 간식만 알고 있어요...ㅎ"}, (err)=>{
                         if(err) console.log(err);
                     });
                 }
