@@ -41,23 +41,23 @@ module.exports= function (callback) {
     let parseMeal = function (html) {
         let meals = [];
         let $ = cheerio.load(html, {decodeEntities: false}); // option to avoid unicode hangul issue
-        /*
+
+        let meal = [];
         $(".meal").find('ul').each((i, elem) => {
-            let meal = "";
-            $(elem).find('li').each((j, elem) => {
-                    meal += $(elem).toString()
-                        .replace("<li>", "")
-                        .replace("</li>", "")
-                        .replace(/ /g, "")
-                        .replace(/amp;/g, "");
-                }
-            );
-            // remove \n in start or end
-            if(meal.charAt(0)==='\n') meal.replace('\n', "");
-            if(meal.charAt(meal.length)==='\n') meal=meal.substring(0, meal.length-1);
-            meals.push(meal);
-        });
-        */
+            let chunk = "";
+        $(elem).find('li').each((j, elem) => {
+            chunk += $(elem).toString()
+            .replace("<li>", "")
+            .replace("</li>", "")
+            .replace(/ /g, "")
+            .replace(/amp;/g, "");
+    }
+        );
+        if(chunk.charAt(chunk.length-1)==='\n') chunk=chunk.substring(0, chunk.length-1);
+        meal.push(chunk);
+    });
+        meals.push(meal);
+
         function generateLookupDate(yyyy, mm, dd){
             let target = `${yyyy}-`;
             if(mm<10) target += `0${mm}-`;
@@ -67,37 +67,31 @@ module.exports= function (callback) {
             return target
         }
 
-        let lookupDate = generateLookupDate(yyyy, mm, dd);
-        let found1 = false;
+        let lookupDate = generateLookupDate(yyyy, mm, dd+1);
         $(".meal-con").find('tr').each((i, elem)=>{
             if($(elem).find('th').toString().indexOf(lookupDate)>=0){
-                let meal = [];
-                $(elem).find('li').each((j, elem) => {
-                    let chunk = $(elem).toString()
-                        .replace("<li>", "")
-                        .replace("</li>", "")
-                        .replace(/ /g, "")
-                        .replace(/amp;/g, "")
-                        .replace("[조식]", "")
-                        .replace("[중식]", "")
-                        .replace("[석식]", "");
-                    try {
-                        if(chunk.charAt(chunk.length-1)==='\n') chunk = chunk.substring(0, chunk.length-1);
-                    }catch(exception){
-                        console.log(exception);
-                        console.log("Substring operation for meal chunk failed!");
-                    }
-                        meal.push(chunk);
-                    }
-                );
-                meals.push(meal);
-                if(!found1){
-                    found1=true;
-                    lookupDate = generateLookupDate(yyyy, mm, dd+1);
-                }
-                if(found1) return false;
-                }
-        });
+            let meal = [];
+            $(elem).find('li').each((j, elem) => {
+                let chunk = $(elem).toString()
+                    .replace("<li>", "")
+                    .replace("</li>", "")
+                    .replace(/ /g, "")
+                    .replace(/amp;/g, "")
+                    .replace("[조식]", "")
+                    .replace("[중식]", "")
+                    .replace("[석식]", "");
+            try {
+                if(chunk.charAt(chunk.length-1)==='\n') chunk = chunk.substring(0, chunk.length-1);
+            }catch(exception){
+                console.log(exception);
+                console.log("Substring operation for meal chunk failed!");
+            }
+            meal.push(chunk);
+        }
+        );
+            meals.push(meal);
+        }
+    });
         while(meals.length<2) meals.push(["", "", ""]);
         callback(meals);
     };
