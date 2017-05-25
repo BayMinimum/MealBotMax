@@ -234,7 +234,7 @@ function replyMeal(pre, type, day, replyFunc){
 function replySnack(pre, replyFunc){
     if(snack===undefined) {
         replyFunc({text: "가온누리에서 간식정보를 가져오는 중이에요! 잠시만 기다려주세요..."}, (err)=>{
-            console.log(err);
+            if(err) console.log(err);
         });
         getSnack((receivedSnack) => {
             snack = receivedSnack;
@@ -242,9 +242,18 @@ function replySnack(pre, replyFunc){
         });
     }
     else if(snack===""){
-        replyFunc({text: '가온누리에 간식 정보가 없어요...ㅠ'}, (err)=>{
+        replyFunc({text: '가온누리에 간식 정보가 없었던 것 같은데...다시 한 번 찾아보고 올게요!'}, (err)=>{
             if(err) console.log(err);
-        })
+        });
+        getSnack((receivedSnack) => {
+            snack = receivedSnack;
+            let replyText;
+            if(snack==="") replyText = '가온누리에 간식 정보가 없어요...ㅠ';
+            else replyText = pre+' 간식\n'+snack;
+            replyFunc({text:replyText}, (err)=>{
+                if(err) console.log(err);
+            });
+        });
     }else replyFunc({text: pre+' 간식\n'+snack}, (err)=>{
         if(err) console.log(err);
     });
