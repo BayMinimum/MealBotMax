@@ -3,10 +3,11 @@ module.exports=function (callback) {
     'use strict';
     let cheerio = require('cheerio');
     let http = require('http');
+    let time = require('time');
 
     let options = {
         host: "gaonnuri.ksain.net",
-        path: "/xe/?mid=login"
+        path: "/xe/"
     };
 
     // get html data from school website
@@ -24,7 +25,15 @@ module.exports=function (callback) {
 
     let parseSnack =function (html) {
         let $ = cheerio.load(html, {decodeEntities: false}); // option to avoid unicode hangul issue
-        let snack=$(".snack").parent().find(".menu").text();
+        let now = new time.Date();
+        now.setTimezone("Asia/Seoul");
+        let dd=now.getDate();
+
+        let snack;
+        let date_text = $('.food').parent().parent().find('.date').html();
+        let day = date_text.substring(date_text.indexOf('/')+1,date_text.indexOf((')')));
+        if(day==dd) snack = $(".food").parent().next().next().next().find(".menu").html();
+        else snack=$(".food").last().parent().find(".menu").html();
         if(snack.indexOf("정보")>=0 && snack.indexOf("없음")>=0) snack = "";
         try {
             if(snack.charAt(0)===' ') snack = snack.substring(1, snack.length);
@@ -32,6 +41,7 @@ module.exports=function (callback) {
             console.log(exception);
             console.log("Substring operation for snack failed!");
         }
+        console.log(snack);
         callback(snack);
     };
 
