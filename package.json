@@ -1,6 +1,6 @@
 {
   "name": "mealbotmax",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "KSA Meal Bot server for Telegram",
   "main": "app.js",
   "scripts": {
