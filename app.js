@@ -176,8 +176,9 @@ function sendMessage(chat_id, text){
 
 let meals = undefined;
 let snack = undefined;
-let getMeals = require('./meal');
-let getSnack = require('./snack');
+let meal_bot_core = require("meal_bot_core")
+let getMeals = meal_bot_core.meal
+let getSnack = meal_bot_core.snack
 const mealTypeStr = ['조식', '중식', '석식', '급식'];
 function isLastDay(yyyy, mm, dd){
     if(yyyy%4===0 && mm===2) return dd===29;
