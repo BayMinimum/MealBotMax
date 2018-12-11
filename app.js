@@ -181,7 +181,7 @@ let meals = undefined;
 let snack = undefined;
 
 function getFromCore(type, callback) {
-  let data = ""
+  let data = "";
   let req = https.request({
     host: "us-central1-meal-bot-core.cloudfunctions.net",
     path: "/meal-bot-core",
@@ -191,21 +191,21 @@ function getFromCore(type, callback) {
     method: "POST",
     agent: false
   }, function (res) {
-    res.setEncoding("utf8")
+    res.setEncoding("utf8");
     res.on("data", function (chunk) {
-      data += chunk
+      data += chunk;
       console.log("received chunk")
-    })
+    });
     res.on("end", function () {
       callback(data)
     })
-  })
+  });
   req.write(
     `{"type":"${type}"}`
-  )
+  );
   req.on("error", (err) => {
     console.log(err)
-  })
+  });
   req.end()
 }
 
@@ -235,7 +235,7 @@ function replyMeal(pre, type, day, replyFunc) {
       console.log(err);
     });
     getFromCore("meal", (receivedMeals) => {
-      meals = JSON.parse(receivedMeals)
+      meals = JSON.parse(receivedMeals);
       replyMeal(pre, type, day, replyFunc);
     });
   } else {
@@ -251,7 +251,7 @@ function replyMeal(pre, type, day, replyFunc) {
       else textToSend += meals[day][type];
     }
     else for (let i = 0; i < 3; i += 1) {
-      textToSend += `\n[${mealTypeStr[i]}]\n`
+      textToSend += `\n[${mealTypeStr[i]}]\n`;
       if (meals[day][i] === "") {
         textToSend += `학교 홈페이지에 업로드되지 않았어요...ㅠ`
       }
