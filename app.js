@@ -91,13 +91,13 @@ function onMessage(msg, reply) {
           });
         }
       });
-    } else if (text.indexOf("해지") >= 0) {
+    } else if (text.indexOf("해지") >= 0 || text.indexOf("졸업") >= 0) {
       console.log("Opt-out request");
       db_query(-1, chat_id, function cb(err, exists) {
         if (err) reply({text: "오류가 발생했습니다. 다시 시도해 주시겠어요?"}, (err) => {
           if (err) console.log(err);
         });
-        else if (exists) reply({text: "해지되었습니다. 그동안 이용해 주셔서 감사합니다."}, (err) => {
+        else if (exists) reply({text: `${text.indexOf("졸업") >= 0 ? "경🌟졸업🌟축\n" : "해지되었습니다. "}그동안 이용해 주셔서 감사합니다.`}, (err) => {
           if (err) console.log(err);
         });
         else reply({text: "음...등록하시지 않으셨는데요?"}, (err) => {
